@@ -1,2 +1,2 @@
 # lseg-coding-challenge
-LSEG Coding Challenge Colution
+LSEG Coding Challenge Solution
