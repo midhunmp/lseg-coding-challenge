@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class NestedKeyFinderTest {
 
     @Test
+    /** Verifies that a valid nested key path returns the correct value. */
     void testHappyPath() {
         Map<String, Object> map = new HashMap<>();
         map.put("a", Map.of("b", Map.of("c", "value1")));
@@ -17,6 +18,7 @@ public class NestedKeyFinderTest {
     }
 
     @Test
+    /** Verifies null is returned when a key in the path does not exist. */
     void testKeyDoesNotExist() {
         Map<String, Object> map = new HashMap<>();
         map.put("a", Map.of("b", Map.of("c", "value1")));
@@ -24,6 +26,7 @@ public class NestedKeyFinderTest {
     }
 
     @Test
+    /** Verifies that a null key path throws an IllegalArgumentException. */
     void testNullKeyPath() {
         Map<String, Object> map = new HashMap<>();
         map.put("a", Map.of("b", Map.of("c", "value1")));
@@ -31,11 +34,13 @@ public class NestedKeyFinderTest {
     }
 
     @Test
+    /** Verifies that a null map throws an IllegalArgumentException. */
     void testNullMap() {
         assertThrows(IllegalArgumentException.class, () -> NestedKeyFinder.getValue(null, "a/b"));
     }
 
     @Test
+    /** Verifies that an empty key path throws an IllegalArgumentException. */
     void testEmptyKeyPath() {
         Map<String, Object> map = new HashMap<>();
         map.put("a", Map.of("b", Map.of("c", "value1")));
@@ -43,6 +48,7 @@ public class NestedKeyFinderTest {
     }
 
     @Test
+    /** Verifies null is returned when a non-map object is encountered mid-path. */
     void testIntermediateValueNotMap() {
         Map<String, Object> map = new HashMap<>();
         map.put("a", "notAMap");
@@ -50,6 +56,7 @@ public class NestedKeyFinderTest {
     }
 
     @Test
+    /** Verifies that a top-level key returns its correct value. */
     void testSingleKey() {
         Map<String, Object> map = new HashMap<>();
         map.put("key", "value2");
@@ -57,6 +64,7 @@ public class NestedKeyFinderTest {
     }
 
     @Test
+    /** Ensures null is returned when the key path is broken. */
     void testEmptySegmentInPath() {
         Map<String, Object> map = new HashMap<>();
         map.put("a", Map.of("b", "c"));

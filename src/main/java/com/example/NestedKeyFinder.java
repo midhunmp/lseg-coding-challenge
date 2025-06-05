@@ -3,28 +3,37 @@ package com.example;
 import java.util.Map;
 
 public class NestedKeyFinder {
-    public static Object getValue(Map<String, Object> objectMap, String keyPathToSearch) {
+    /**
+     * Finds a value from a input nested map corresponding to the search keypath
+     * using "/" as delimiter.
+     *
+     * @param inputMap        nested map to search
+     * @param keyPathToSearch search keypath using "/" as delimiter
+     * @return the value extracted at the specified nested key path, or null if the path is invalid or not found
+     * @throws IllegalArgumentException if inputMap is null or keyPathToSearch is null/empty
+     */
+    public static Object getValue(Map<String, Object> inputMap, String keyPathToSearch) {
 
-        System.out.printf("Nested object: %s, key path: %s\n", objectMap, keyPathToSearch);
+        System.out.println("Nested object: " + inputMap + ", key path: " + keyPathToSearch);
 
-        if (objectMap == null || keyPathToSearch == null || keyPathToSearch.isEmpty()) {
+        if (inputMap == null || keyPathToSearch == null || keyPathToSearch.isEmpty()) {
             throw new IllegalArgumentException("Input map and key path must not be null or empty.");
         }
 
-        String[] keys = keyPathToSearch.trim().split("/")    ;
-        Object currentValue = objectMap;
+        String[] keys = keyPathToSearch.trim().split("/");
+        Object currentValue = inputMap;
 
-        for(String key: keys) {
+        for (String key : keys) {
             if (currentValue instanceof Map) {
                 Map<String, Object> currentMap = (Map<String, Object>) currentValue;
                 if (currentMap.containsKey(key)) {
                     currentValue = currentMap.get(key);
                 } else {
-                    System.out.printf("Key '%s' not found in current map .%n", key);
+                    System.out.println("Key '" + key + "' not found in current map.");
                     return null;
                 }
             } else {
-                System.out.printf("Found non-map object before reaching final key: '%s'%n", key);
+                System.out.println("Found non-map object before reaching final key: '" + key + "'");
                 return null;
             }
         }
